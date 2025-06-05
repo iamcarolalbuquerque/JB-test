@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # postgresql database
+  db:
+    image: postgres:13-alpine
+    container_name: my_app_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB} 
+      POSTGRES_USER: ${POSTGRES_USER} 
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} 
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+
+  # Python application
+  app:
+    build: . 
+    container_name: my_python_app
+    command: python -m unittest app/unit_tests.py; python -m unittest app/integration_tests.py 
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: db 
+      POSTGRES_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data: 
