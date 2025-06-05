@@ -19,7 +19,7 @@ services:
   app:
     build: . 
     container_name: my_python_app
-    command: python -m unittest app/unit_tests.py 
+    command: python3 -m unittest app/unit_tests.py 
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
