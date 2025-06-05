@@ -36,6 +36,6 @@ jobs:
         POSTGRES_USER: ${{ vars.TEST_DB_USERNAME }}
         POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
 
-    - name: Clean up Docker Compose services
-      if: always()
-      run: docker-compose down -v
+    # - name: Clean up Docker Compose services
+    #   if: always()
+    #   run: docker-compose down -v
